@@ -1360,16 +1360,17 @@ async function submitSurvey() {
     alert(`Faltan ${sinResponder.length} pregunta${sinResponder.length > 1 ? 's' : ''} por responder. Completa todas antes de enviar.`);
     return;
   }
-  // Validar preguntas abiertas
+  // Validar preguntas abiertas (mínimo 20 caracteres)
   const textareas = [
     { id: 'C1', el: document.getElementById('C1') },
     { id: 'C2', el: document.getElementById('C2') },
     { id: 'C3', el: document.getElementById('C3') }
   ];
   for (const { el } of textareas) {
-    if (!el || !el.value.trim()) {
+    if (!el || el.value.trim().length < 20) {
       highlightInvalid(el && el.closest('.open-question'));
-      alert('Por favor responde todas las preguntas abiertas antes de enviar.');
+      const faltan = el ? 20 - el.value.trim().length : 20;
+      alert(`Las preguntas abiertas deben tener al menos 20 caracteres. Faltan ${faltan} caracteres en esta respuesta.`);
       return;
     }
   }
