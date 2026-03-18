@@ -417,6 +417,26 @@
   }
   .btn-back:hover { border-color: var(--navy); color: var(--navy); }
 
+  /* GUARDAR BLOQUE */
+  .btn-guardar {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.2rem;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-guardar:hover { background: var(--navy-light); transform: translateY(-1px); }
+  .btn-guardar:active { transform: scale(0.98); }
+  .btn-guardar.guardado { background: #2e7d32; }
+  .btn-guardar:disabled { opacity: 0.75; cursor: default; transform: none; }
+
   /* SUCCESS */
   .success-card {
     background: var(--navy);
@@ -591,6 +611,7 @@
         <div class="question-text">¿Qué tan familiarizado/a estás con los valores de la empresa?</div>
         <div class="likert-options" id="E6"></div>
       </div>
+      <button class="btn-guardar" id="btn-guardar-b1" onclick="guardarBloque('b1',['E1','E2','E3','E4','E5','E6'])">💾 Guardar este bloque</button>
     </div>
 
     <!-- BLOQUE 2: LÍDER -->
@@ -633,6 +654,7 @@
         <div class="question-text">Mi líder reconoce cuando hago bien mi trabajo.</div>
         <div class="likert-options" id="L7"></div>
       </div>
+      <button class="btn-guardar" id="btn-guardar-b2" onclick="guardarBloque('b2',['L1','L2','L3','L4','L5','L6','L7'])">💾 Guardar este bloque</button>
     </div>
 
     <!-- BLOQUE 3: EQUIPO -->
@@ -670,6 +692,7 @@
         <div class="question-text">Cuando alguien se equivoca, mis compañeros lo critican en lugar de ayudarlo.</div>
         <div class="likert-options" id="T6"></div>
       </div>
+      <button class="btn-guardar" id="btn-guardar-b3" onclick="guardarBloque('b3',['T1','T2','T3','T4','T5','T6'])">💾 Guardar este bloque</button>
     </div>
 
     <!-- BLOQUE 4: SOBRE MÍ MISMO -->
@@ -702,6 +725,7 @@
         <div class="question-text" id="M5-text">Cargando...</div>
         <div class="likert-options" id="M5"></div>
       </div>
+      <button class="btn-guardar" id="btn-guardar-b4" onclick="guardarBloque('b4',['M1','M2','M3','M4','M5'])">💾 Guardar este bloque</button>
     </div>
 
     <!-- BLOQUE 5: PERTENENCIA -->
@@ -738,6 +762,7 @@
         <div class="question-text">Cuando tengo un mal día en el trabajo, pienso en buscar otro empleo.</div>
         <div class="likert-options" id="P6"></div>
       </div>
+      <button class="btn-guardar" id="btn-guardar-b5" onclick="guardarBloque('b5',['P1','P2','P3','P4','P5','P6'])">💾 Guardar este bloque</button>
     </div>
 
     <!-- BLOQUE 6: FUTURO -->
@@ -764,6 +789,7 @@
         <div class="question-text">Me veo trabajando en FOODIX dentro de 1 año.</div>
         <div class="likert-options" id="F4"></div>
       </div>
+      <button class="btn-guardar" id="btn-guardar-b6" onclick="guardarBloque('b6',['F1','F2','F3','F4'])">💾 Guardar este bloque</button>
     </div>
 
     <!-- BLOQUE 7: AMBIENTE -->
@@ -800,6 +826,7 @@
         <div class="question-text">En mi turno hay situaciones que me impiden hacer bien mi trabajo.</div>
         <div class="likert-options" id="A6"></div>
       </div>
+      <button class="btn-guardar" id="btn-guardar-b7" onclick="guardarBloque('b7',['A1','A2','A3','A4','A5','A6'])">💾 Guardar este bloque</button>
     </div>
 
     <!-- BLOQUE 8: BENEFICIOS -->
@@ -809,6 +836,7 @@
 
       <div class="rank-intro">💡 Arrastra y suelta para ordenar — el primero de la lista es el que más valoras.</div>
       <ul class="rank-list" id="rank-list"></ul>
+      <button class="btn-guardar" id="btn-guardar-b8" onclick="guardarBloque('b8',[])">💾 Guardar este bloque</button>
     </div>
 
     <!-- BLOQUE 9: COMENTARIOS -->
@@ -1341,6 +1369,31 @@ function setupStep3() {
   // Restore saved answers after rendering
   const saved = loadProgress();
   if (saved) restoreAnswers(saved);
+}
+
+function guardarBloque(bloqueId, preguntas) {
+  // Validar que todas las preguntas del bloque estén respondidas
+  const sinResponder = preguntas.filter(q => !document.querySelector(`input[name="${q}"]:checked`));
+  if (sinResponder.length > 0) {
+    const firstInput = document.querySelector(`input[name="${sinResponder[0]}"]`);
+    const wrapper = firstInput && firstInput.closest('.question-item');
+    highlightInvalid(wrapper);
+    alert(`Faltan ${sinResponder.length} pregunta${sinResponder.length > 1 ? 's' : ''} por responder en este bloque.`);
+    return;
+  }
+  // Guardar en localStorage
+  saveProgress();
+  // Feedback visual en el botón
+  const btn = document.getElementById(`btn-guardar-${bloqueId}`);
+  const original = btn.innerHTML;
+  btn.innerHTML = '✅ ¡Bloque guardado!';
+  btn.classList.add('guardado');
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = original;
+    btn.classList.remove('guardado');
+    btn.disabled = false;
+  }, 3000);
 }
 
 function highlightInvalid(el) {
