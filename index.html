@@ -338,6 +338,17 @@
     border-color: var(--red);
     background: #fff5f6;
   }
+  /* Validación — campo requerido sin responder */
+  .campo-requerido {
+    border: 2px solid #e53e3e !important;
+    border-radius: 8px;
+    animation: shake 0.35s ease-in-out;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25%      { transform: translateX(-6px); }
+    75%      { transform: translateX(6px); }
+  }
   .rank-pos {
     width: 26px;
     height: 26px;
@@ -1332,7 +1343,37 @@ function setupStep3() {
   if (saved) restoreAnswers(saved);
 }
 
+function highlightInvalid(el) {
+  if (!el) return;
+  el.classList.add('campo-requerido');
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => el.classList.remove('campo-requerido'), 3000);
+}
+
 async function submitSurvey() {
+  // Validar preguntas Likert
+  const sinResponder = ALL_QUESTIONS.filter(q => !document.querySelector(`input[name="${q}"]:checked`));
+  if (sinResponder.length > 0) {
+    const firstInput = document.querySelector(`input[name="${sinResponder[0]}"]`);
+    const wrapper = firstInput && (firstInput.closest('.question-item') || firstInput.closest('.open-question'));
+    highlightInvalid(wrapper);
+    alert(`Faltan ${sinResponder.length} pregunta${sinResponder.length > 1 ? 's' : ''} por responder. Completa todas antes de enviar.`);
+    return;
+  }
+  // Validar preguntas abiertas
+  const textareas = [
+    { id: 'C1', el: document.getElementById('C1') },
+    { id: 'C2', el: document.getElementById('C2') },
+    { id: 'C3', el: document.getElementById('C3') }
+  ];
+  for (const { el } of textareas) {
+    if (!el || !el.value.trim()) {
+      highlightInvalid(el && el.closest('.open-question'));
+      alert('Por favor responde todas las preguntas abiertas antes de enviar.');
+      return;
+    }
+  }
+
   const btn = document.querySelector('[onclick="submitSurvey()"]');
   btn.disabled = true;
   btn.textContent = '⏳ Enviando...';
