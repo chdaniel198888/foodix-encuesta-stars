@@ -901,7 +901,7 @@ const tiendas = ['CH001','CH002','CH003','SB001','SC001','SC002'];
 const plantas = ['FX001','FX002'];
 
 function getNivel2Label(local) {
-  if (tiendas.includes(local)) return 'Nivel 2 — Gerentes de Tienda';
+  if (tiendas.includes(local)) return 'Nivel 2 — Gerentes y Subgerentes de Tienda';
   if (plantas.includes(local)) return 'Nivel 2 — Auxiliares, Asistentes y Analistas';
   return 'Nivel 2';
 }
@@ -915,7 +915,7 @@ function getM5(nivel, subnivel, local) {
     };
   }
   if (nivel === 'N2') {
-    if (subnivel === 'gerente') {
+    if (subnivel === 'gerente' || subnivel === 'subgerente') {
       return {
         text: 'En los momentos de más presión, me enfoco en los resultados aunque deje de acompañar a mi equipo en el proceso.',
         inverso: true
@@ -1295,10 +1295,13 @@ function onNivelChange() {
     const esFX = ['FX001','FX002'].includes(local);
 
     if (esTienda) {
-      // Asignar automáticamente gerente, ocultar selector
-      document.getElementById('select-subnivel').value = 'gerente';
-      subnivel.style.display = 'none';
-      btn.disabled = false;
+      // Mostrar selector con Gerente y Subgerente
+      const sel = document.getElementById('select-subnivel');
+      sel.innerHTML = '<option value="">— Selecciona tu cargo —</option>' +
+        '<option value="gerente">Gerente de Tienda</option>' +
+        '<option value="subgerente">Subgerente de Tienda</option>';
+      subnivel.style.display = 'block';
+      btn.disabled = true; // espera selección de cargo
     } else if (esFX) {
       // Asignar automáticamente admin, ocultar selector
       document.getElementById('select-subnivel').value = 'admin';
