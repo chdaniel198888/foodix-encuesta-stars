@@ -1322,8 +1322,8 @@ function setupStep3() {
   renderLikert('M5', scaleFreq, true);
 
   let bens;
-  if (nivel === 'N3') bens = beneficiosN3;
-  else if (nivel === 'N2') bens = beneficiosN2;
+  if (nivel === 'N3') bens = [...new Set([...beneficiosN3, ...beneficiosN2, ...beneficiosN1])];
+  else if (nivel === 'N2') bens = [...new Set([...beneficiosN2, ...beneficiosN1])];
   else bens = beneficiosN1;
   buildRankList(bens);
 
