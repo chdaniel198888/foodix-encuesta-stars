@@ -247,14 +247,9 @@
   .sc-b6 .question-item { background: var(--b6-q); border-color: var(--b6-qb); }
   .sc-b7 .question-item { background: var(--b7-q); border-color: var(--b7-qb); }
 
-  /* INVERSO — solo borde izquierdo grueso del color del bloque */
-  .sc-b1 .question-item.inverso { border-left: 4px solid var(--b1); }
-  .sc-b2 .question-item.inverso { border-left: 4px solid var(--b2); }
-  .sc-b3 .question-item.inverso { border-left: 4px solid var(--b3); }
-  .sc-b4 .question-item.inverso { border-left: 4px solid var(--b4); }
-  .sc-b5 .question-item.inverso { border-left: 4px solid var(--b5); }
-  .sc-b6 .question-item.inverso { border-left: 4px solid var(--b6); }
-  .sc-b7 .question-item.inverso { border-left: 4px solid var(--b7); }
+  /* INVERSO — clase mantenida en el HTML para identificar preguntas de puntuación inversa
+     durante el análisis de datos (score = 5 - valor_respondido).
+     Visual: sin indicador visible al usuario para no influir en sus respuestas. */
 
   .question-text { font-size: 0.92rem; font-weight: 500; color: var(--text); line-height: 1.5; margin-bottom: 12px; }
 
