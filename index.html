@@ -886,25 +886,21 @@
 // CONFIGURACIÓN
 // ============================================================
 const locationLevels = {
-  CH001: ['N1','N2'], CH002: ['N1','N2'], CH003: ['N1','N2'],
-  SB001: ['N1','N2'], SC001: ['N1','N2'], SC002: ['N1','N2'],
+  CH001: ['N1','N2G','N2S'], CH002: ['N1','N2G','N2S'], CH003: ['N1','N2G','N2S'],
+  SB001: ['N1','N2G','N2S'], SC001: ['N1','N2G','N2S'], SC002: ['N1','N2G','N2S'],
   FX001: ['N1','N2','N3'], FX002: ['N1','N2','N3']
 };
 
 const levelNames = {
-  N1: 'Nivel 1 — Polifuncionales y Operativos',
-  N2: 'Nivel 2',
-  N3: 'Nivel 3 — Supervisores, Coordinadores y Jefaturas'
+  N1:  'Nivel 1 — Polifuncionales y Operativos',
+  N2G: 'Gerente de Tienda',
+  N2S: 'Subgerente de Tienda',
+  N2:  'Nivel 2 — Auxiliares, Asistentes y Analistas',
+  N3:  'Nivel 3 — Supervisores, Coordinadores y Jefaturas'
 };
 
 const tiendas = ['CH001','CH002','CH003','SB001','SC001','SC002'];
 const plantas = ['FX001','FX002'];
-
-function getNivel2Label(local) {
-  if (tiendas.includes(local)) return 'Nivel 2 — Gerentes y Subgerentes de Tienda';
-  if (plantas.includes(local)) return 'Nivel 2 — Auxiliares, Asistentes y Analistas';
-  return 'Nivel 2';
-}
 
 // Pregunta variable M5 por nivel/sublevel/local
 function getM5(nivel, subnivel, local) {
@@ -914,18 +910,17 @@ function getM5(nivel, subnivel, local) {
       inverso: true
     };
   }
+  if (nivel === 'N2G' || nivel === 'N2S' || (nivel === 'N2' && (subnivel === 'gerente' || subnivel === 'subgerente'))) {
+    return {
+      text: 'En los momentos de más presión, me enfoco en los resultados aunque deje de acompañar a mi equipo en el proceso.',
+      inverso: true
+    };
+  }
   if (nivel === 'N2') {
-    if (subnivel === 'gerente' || subnivel === 'subgerente') {
-      return {
-        text: 'En los momentos de más presión, me enfoco en los resultados aunque deje de acompañar a mi equipo en el proceso.',
-        inverso: true
-      };
-    } else {
-      return {
-        text: 'Cuando identifico un problema en mi área antes de que me lo señalen, lo resuelvo o lo escalo sin esperar a que alguien más lo note.',
-        inverso: false
-      };
-    }
+    return {
+      text: 'Cuando identifico un problema en mi área antes de que me lo señalen, lo resuelvo o lo escalo sin esperar a que alguien más lo note.',
+      inverso: false
+    };
   }
   // N1
   if (local === 'FX001') {
@@ -1288,29 +1283,15 @@ function onNivelChange() {
   const btn = document.getElementById('btn-step2');
   const subnivel = document.getElementById('subnivel-wrap');
 
-  if (nivel === 'N2') {
-    // Tiendas → solo Gerente de Tienda (auto, sin selección)
-    const esTienda = ['CH001','CH002','CH003','SB001','SC001','SC002'].includes(local);
-    // FX → solo admin (auto, sin selección)
-    const esFX = ['FX001','FX002'].includes(local);
-
-    if (esTienda) {
-      // Mostrar selector con Gerente y Subgerente
-      const sel = document.getElementById('select-subnivel');
-      sel.innerHTML = '<option value="">— Selecciona tu cargo —</option>' +
-        '<option value="gerente">Gerente de Tienda</option>' +
-        '<option value="subgerente">Subgerente de Tienda</option>';
-      subnivel.style.display = 'block';
-      btn.disabled = true; // espera selección de cargo
-    } else if (esFX) {
-      // Asignar automáticamente admin, ocultar selector
-      document.getElementById('select-subnivel').value = 'admin';
-      subnivel.style.display = 'none';
-      btn.disabled = false;
-    } else {
-      subnivel.style.display = 'none';
-      btn.disabled = false;
-    }
+  if (nivel === 'N2G' || nivel === 'N2S') {
+    // Tiendas: Gerente o Subgerente — sin subnivel adicional
+    subnivel.style.display = 'none';
+    btn.disabled = false;
+  } else if (nivel === 'N2') {
+    // FX: admin — sin subnivel adicional
+    document.getElementById('select-subnivel').value = 'admin';
+    subnivel.style.display = 'none';
+    btn.disabled = false;
   } else {
     subnivel.style.display = 'none';
     btn.disabled = !nivel;
@@ -1365,7 +1346,7 @@ function setupStep3() {
 
   let bens;
   if (nivel === 'N3') bens = [...new Set([...beneficiosN3, ...beneficiosN2, ...beneficiosN1])];
-  else if (nivel === 'N2') bens = [...new Set([...beneficiosN2, ...beneficiosN1])];
+  else if (nivel === 'N2' || nivel === 'N2G' || nivel === 'N2S') bens = [...new Set([...beneficiosN2, ...beneficiosN1])];
   else bens = beneficiosN1;
   buildRankList(bens);
 
@@ -1436,10 +1417,15 @@ async function submitSurvey() {
   btn.textContent = '⏳ Enviando...';
 
   const local    = document.getElementById('select-local').value;
-  const nivel    = document.getElementById('select-nivel').value;
+  const nivelRaw = document.getElementById('select-nivel').value;
   const subnivel = document.getElementById('select-subnivel').value;
 
-  const payload = { local, nivel, subnivel: subnivel || null };
+  // Normalizar N2G/N2S → nivel='N2' + subnivel correspondiente
+  let nivel = nivelRaw, subnivelFinal = subnivel || null;
+  if (nivelRaw === 'N2G') { nivel = 'N2'; subnivelFinal = 'gerente'; }
+  if (nivelRaw === 'N2S') { nivel = 'N2'; subnivelFinal = 'subgerente'; }
+
+  const payload = { local, nivel, subnivel: subnivelFinal };
 
   ALL_QUESTIONS.forEach(q => {
     const sel = document.querySelector(`input[name="${q}"]:checked`);
