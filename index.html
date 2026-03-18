@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOODIX Stars — Encuesta de Clima Laboral 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1E2761;
+    --red: #C41230;
+    --navy-light: #2d3a8c;
+    --bg: #f4f5f9;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --subtext: #5a5f7d;
+    --border: #e2e5f0;
+    --b1: #1E2761; --b1-bg: #eef1fb; --b1-border: #b0bce8; --b1-q: #f5f7fd; --b1-qb: #c8d1ee;
+    --b2: #ba7517; --b2-bg: #faeeda; --b2-border: #f0c070; --b2-q: #fdf6ec; --b2-qb: #f5d09a;
+    --b3: #0f6e56; --b3-bg: #e6f5f1; --b3-border: #8ecfbc; --b3-q: #f2faf7; --b3-qb: #aadecf;
+    --b4: #185fa5; --b4-bg: #e8f2fc; --b4-border: #93c4ef; --b4-q: #f2f8fe; --b4-qb: #b5d4f4;
+    --b5: #993c1d; --b5-bg: #fdf0ec; --b5-border: #f2b59a; --b5-q: #fef6f3; --b5-qb: #f5c9b8;
+    --b6: #3c3489; --b6-bg: #f0eeff; --b6-border: #b8b0e8; --b6-q: #f7f6ff; --b6-qb: #cec9f0;
+    --b7: #3b6d11; --b7-bg: #edf4e0; --b7-border: #aace78; --b7-q: #f5f9ee; --b7-qb: #c0dd97;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--navy);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(30,39,97,0.3);
+  }
+  .header-brand {
+    font-family: 'Sora', sans-serif;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+  .header-brand span { color: #f9a825; }
+  .header-center {
+    flex: 1;
+    text-align: center;
+    padding: 0 10px;
+  }
+  .header-center-title {
+    font-family: 'Sora', sans-serif;
+    color: white;
+    font-size: 0.82rem;
+    font-weight: 600;
+    opacity: 0.9;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .header-center-sub {
+    font-size: 0.68rem;
+    color: #f9a825;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .header-badge {
+    background: var(--red);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  /* PROGRESS */
+  .progress-wrap {
+    background: white;
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 62px;
+    z-index: 99;
+  }
+  .progress-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--subtext);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .progress-bar {
+    height: 5px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--navy), var(--red));
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  /* CONTAINER */
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 4rem;
+  }
+
+  /* STEPS */
+  .step { display: none; }
+  .step.active { display: block; }
+
+  /* WELCOME CARD */
+  .welcome-card {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .welcome-card::before {
+    content: '★';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-size: 8rem;
+    color: rgba(255,255,255,0.05);
+  }
+  .welcome-card h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .welcome-card h1 span { color: #f9a825; }
+  .welcome-card p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+  }
+  .anon-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    color: white;
+  }
+
+  .section-sub { font-size: 0.8rem; color: var(--subtext); margin-bottom: 1.25rem; padding-left: 36px; line-height: 1.5; }
+
+  /* FORM ELEMENTS */
+  label.field-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--subtext);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  select, input[type="text"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text);
+    background: white;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a5f7d' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    transition: border-color 0.2s;
+  }
+  select:focus, input:focus {
+    outline: none;
+    border-color: var(--navy);
+  }
+
+  /* SECTION CARD por bloque */
+  .section-card { background: var(--card); border-radius: 14px; padding: 1.25rem 1.25rem 1.5rem; margin-bottom: 1.25rem; border: 1.5px solid var(--border); box-shadow: 0 2px 8px rgba(30,39,97,0.05); }
+  .sc-b1 { background: var(--b1-bg); border-color: var(--b1-border); }
+  .sc-b2 { background: var(--b2-bg); border-color: var(--b2-border); }
+  .sc-b3 { background: var(--b3-bg); border-color: var(--b3-border); }
+  .sc-b4 { background: var(--b4-bg); border-color: var(--b4-border); }
+  .sc-b5 { background: var(--b5-bg); border-color: var(--b5-border); }
+  .sc-b6 { background: var(--b6-bg); border-color: var(--b6-border); }
+  .sc-b7 { background: var(--b7-bg); border-color: var(--b7-border); }
+
+  .section-title { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 8px; }
+  .sc-b1 .section-title { color: var(--b1); }
+  .sc-b2 .section-title { color: var(--b2); }
+  .sc-b3 .section-title { color: var(--b3); }
+  .sc-b4 .section-title { color: var(--b4); }
+  .sc-b5 .section-title { color: var(--b5); }
+  .sc-b6 .section-title { color: var(--b6); }
+  .sc-b7 .section-title { color: var(--b7); }
+
+  .section-title .icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; color: white; }
+  .sc-b1 .icon { background: var(--b1); }
+  .sc-b2 .icon { background: var(--b2); }
+  .sc-b3 .icon { background: var(--b3); }
+  .sc-b4 .icon { background: var(--b4); }
+  .sc-b5 .icon { background: var(--b5); }
+  .sc-b6 .icon { background: var(--b6); }
+  .sc-b7 .icon { background: var(--b7); }
+
+  .section-sub { font-size: 0.8rem; color: var(--subtext); margin-bottom: 1.25rem; padding-left: 36px; line-height: 1.5; }
+
+  /* QUESTION ITEM */
+  .question-item { border-radius: 12px; padding: 1rem 1rem 1.1rem; margin-bottom: 10px; border: 1px solid; }
+  .sc-b1 .question-item { background: var(--b1-q); border-color: var(--b1-qb); }
+  .sc-b2 .question-item { background: var(--b2-q); border-color: var(--b2-qb); }
+  .sc-b3 .question-item { background: var(--b3-q); border-color: var(--b3-qb); }
+  .sc-b4 .question-item { background: var(--b4-q); border-color: var(--b4-qb); }
+  .sc-b5 .question-item { background: var(--b5-q); border-color: var(--b5-qb); }
+  .sc-b6 .question-item { background: var(--b6-q); border-color: var(--b6-qb); }
+  .sc-b7 .question-item { background: var(--b7-q); border-color: var(--b7-qb); }
+
+  /* INVERSO — solo borde izquierdo grueso del color del bloque */
+  .sc-b1 .question-item.inverso { border-left: 4px solid var(--b1); }
+  .sc-b2 .question-item.inverso { border-left: 4px solid var(--b2); }
+  .sc-b3 .question-item.inverso { border-left: 4px solid var(--b3); }
+  .sc-b4 .question-item.inverso { border-left: 4px solid var(--b4); }
+  .sc-b5 .question-item.inverso { border-left: 4px solid var(--b5); }
+  .sc-b6 .question-item.inverso { border-left: 4px solid var(--b6); }
+  .sc-b7 .question-item.inverso { border-left: 4px solid var(--b7); }
+
+  .question-text { font-size: 0.92rem; font-weight: 500; color: var(--text); line-height: 1.5; margin-bottom: 12px; }
+
+  /* LIKERT — color heredado del bloque */
+  .likert-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .likert-option input[type="radio"] { display: none; }
+  .likert-option label { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 4px; border-radius: 8px; border: 1.5px solid; cursor: pointer; transition: all 0.15s; text-align: center; min-height: 58px; user-select: none; }
+  .likert-option .opt-num { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 3px; line-height: 1; }
+  .likert-option .opt-text { font-size: 0.65rem; font-weight: 600; line-height: 1.2; text-transform: uppercase; letter-spacing: 0.02em; }
+  .likert-option label:hover { opacity: 0.85; }
+
+  .sc-b1 .likert-option label { background: var(--b1-bg); border-color: var(--b1-border); color: var(--b1); }
+  .sc-b1 .likert-option input:checked + label { background: var(--b1); border-color: var(--b1); color: white; transform: translateY(-2px); }
+  .sc-b2 .likert-option label { background: var(--b2-bg); border-color: var(--b2-border); color: var(--b2); }
+  .sc-b2 .likert-option input:checked + label { background: var(--b2); border-color: var(--b2); color: white; transform: translateY(-2px); }
+  .sc-b3 .likert-option label { background: var(--b3-bg); border-color: var(--b3-border); color: var(--b3); }
+  .sc-b3 .likert-option input:checked + label { background: var(--b3); border-color: var(--b3); color: white; transform: translateY(-2px); }
+  .sc-b4 .likert-option label { background: var(--b4-bg); border-color: var(--b4-border); color: var(--b4); }
+  .sc-b4 .likert-option input:checked + label { background: var(--b4); border-color: var(--b4); color: white; transform: translateY(-2px); }
+  .sc-b5 .likert-option label { background: var(--b5-bg); border-color: var(--b5-border); color: var(--b5); }
+  .sc-b5 .likert-option input:checked + label { background: var(--b5); border-color: var(--b5); color: white; transform: translateY(-2px); }
+  .sc-b6 .likert-option label { background: var(--b6-bg); border-color: var(--b6-border); color: var(--b6); }
+  .sc-b6 .likert-option input:checked + label { background: var(--b6); border-color: var(--b6); color: white; transform: translateY(-2px); }
+  .sc-b7 .likert-option label { background: var(--b7-bg); border-color: var(--b7-border); color: var(--b7); }
+  .sc-b7 .likert-option input:checked + label { background: var(--b7); border-color: var(--b7); color: white; transform: translateY(-2px); }
+
+  /* OPEN TEXT */
+  .open-question {
+    background: #fafbff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 10px;
+  }
+  .open-question .question-text { margin-bottom: 10px; }
+  textarea {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text);
+    resize: vertical;
+    min-height: 90px;
+    transition: border-color 0.2s;
+    background: white;
+  }
+  textarea:focus { outline: none; border-color: var(--navy); }
+  textarea::placeholder { color: #aab0c6; }
+
+  /* DRAG TO RANK */
+  .rank-intro {
+    font-size: 0.82rem;
+    color: var(--subtext);
+    margin-bottom: 12px;
+    background: var(--agree-bg);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border-left: 3px solid var(--agree-border);
+  }
+  .rank-list {
+    list-style: none;
+  }
+  .rank-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    cursor: grab;
+    transition: all 0.15s;
+    user-select: none;
+    touch-action: none;
+  }
+  .rank-item:active { cursor: grabbing; }
+  .rank-item.dragging {
+    opacity: 0.5;
+    border-color: var(--navy);
+    transform: scale(1.02);
+  }
+  .rank-item.drag-over {
+    border-color: var(--red);
+    background: #fff5f6;
+  }
+  .rank-pos {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: white;
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-text {
+    font-size: 0.88rem;
+    font-weight: 500;
+    flex: 1;
+  }
+  .rank-handle {
+    color: #aab0c6;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  /* BUTTONS */
+  .btn-primary {
+    width: 100%;
+    padding: 0.9rem;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+  }
+  .btn-primary:hover {
+    background: var(--navy-light);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(30,39,97,0.2);
+  }
+  .btn-primary:disabled {
+    background: #c0c4d8;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  .btn-back {
+    background: none;
+    border: 1.5px solid var(--border);
+    color: var(--subtext);
+    padding: 0.75rem;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+  }
+  .btn-back:hover { border-color: var(--navy); color: var(--navy); }
+
+  /* SUCCESS */
+  .success-card {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    color: white;
+    text-align: center;
+  }
+  .success-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  .success-card h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+  .success-card p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1.5rem 0;
+  }
+
+  .form-row { margin-bottom: 1rem; }
+
+  /* LEVEL INFO */
+  .level-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--navy);
+    color: white;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    .likert-options { gap: 4px; }
+    .likert-option .opt-text { font-size: 0.58rem; }
+    .likert-option label { padding: 7px 3px; min-height: 52px; }
+    .likert-option .opt-num { font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">FOODIX <span>Stars</span></div>
+  <div class="header-center">
+    <div class="header-center-title">La Receta Somos Todos</div>
+    <div class="header-center-sub">Encuesta de Clima Laboral 2026</div>
+  </div>
+  <div class="header-badge">2026</div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-label">
+    <span id="progress-label">Inicio</span>
+    <span id="progress-pct">0%</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ===== STEP 1: BIENVENIDA + LOCAL ===== -->
+  <div class="step active" id="step-1">
+    <div class="welcome-card">
+      <h1>¡Hola! Queremos saber cómo estás <span>★</span></h1>
+      <p>Esta encuesta nos ayuda a entender tu experiencia en FOODIX y mejorar juntos como equipo. No hay respuestas buenas ni malas — solo queremos tu opinión honesta.</p>
+      <div class="anon-badge">🔒 100% anónima — tus respuestas no están vinculadas a tu nombre</div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title"><div class="icon">📍</div>Tu local de trabajo</div>
+      <div class="section-sub">Selecciona el local donde trabajas actualmente.</div>
+
+      <div class="form-row">
+        <label class="field-label">Local / Sede</label>
+        <select id="select-local" onchange="onLocalChange()">
+          <option value="">— Selecciona tu local —</option>
+          <option value="CH001">CH001 — Chios Real Audiencia</option>
+          <option value="CH002">CH002 — Chios Portugal</option>
+          <option value="CH003">CH003 — Chios Floreana</option>
+          <option value="SB001">SB001 — Simón Bolón Real Audiencia</option>
+          <option value="SC001">SC001 — Santo Cachón Real Audiencia</option>
+          <option value="SC002">SC002 — Santo Cachón Portugal</option>
+          <option value="FX001">FX001 — Bodega / Planta de Producción</option>
+          <option value="FX002">FX002 — Oficinas</option>
+        </select>
+      </div>
+
+      <button class="btn-primary" id="btn-step1" onclick="goToStep(2)" disabled>Continuar →</button>
+    </div>
+  </div>
+
+  <!-- ===== STEP 2: NIVEL ===== -->
+  <div class="step" id="step-2">
+    <div class="section-card">
+      <div class="section-title"><div class="icon">👤</div>Tu nivel y cargo</div>
+      <div class="section-sub">Selecciona el nivel que corresponde a tu cargo en FOODIX.</div>
+
+      <div class="form-row">
+        <label class="field-label">Nivel</label>
+        <select id="select-nivel" onchange="onNivelChange()">
+          <option value="">— Selecciona tu nivel —</option>
+          <!-- Options added dynamically -->
+        </select>
+      </div>
+
+      <div id="subnivel-wrap" style="display:none;" class="form-row">
+        <label class="field-label">Tu cargo específico</label>
+        <select id="select-subnivel" onchange="onSubnivelChange()">
+          <option value="">— Selecciona tu cargo —</option>
+          <option value="gerente">Gerente de Tienda</option>
+          <option value="admin">Auxiliar / Asistente / Analista</option>
+        </select>
+      </div>
+
+      <button class="btn-primary" id="btn-step2" onclick="goToStep(3)" disabled>Continuar →</button>
+      <button class="btn-back" onclick="goToStep(1)">← Volver</button>
+    </div>
+  </div>
+
+  <!-- ===== STEP 3: ENCUESTA ===== -->
+  <div class="step" id="step-3">
+
+    <!-- BLOQUE 1: EMPRESA -->
+    <div class="section-card sc-b1">
+      <div class="section-title"><div class="icon">🏢</div>Sobre nuestra empresa FOODIX</div>
+      <div class="section-sub">Piensa en tu experiencia general trabajando en FOODIX.</div>
+
+      <div class="question-item">
+        <div class="question-text">¿FOODIX es una empresa que busca soluciones en lugar de quedarse en los problemas?</div>
+        <div class="likert-options" id="E1"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">¿Te has sentido bienvenido/a y valorado/a por nosotros desde que ingresaste?</div>
+        <div class="likert-options" id="E2"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">¿FOODIX se preocupa por mi crecimiento y aprendizaje?</div>
+        <div class="likert-options" id="E3"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Siento que en FOODIX las cosas se hacen con pasión y dedicación real.</div>
+        <div class="likert-options" id="E4"></div>
+      </div>
+
+      <!-- E5 INVERSO -->
+      <div class="question-item inverso">
+        <div class="question-text">Siento que en FOODIX me exigen resultados, pero no se preocupan por cómo estoy.</div>
+        <div class="likert-options" id="E5"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">¿Qué tan familiarizado/a estás con los valores de la empresa?</div>
+        <div class="likert-options" id="E6"></div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 2: LÍDER -->
+    <div class="section-card sc-b2">
+      <div class="section-title"><div class="icon">🎯</div>Mi Líder Inmediato</div>
+      <div class="section-sub">Piensa en tu jefe directo del día a día al responder estas preguntas.</div>
+
+      <div class="question-item">
+        <div class="question-text">Mi líder mantiene la calma y busca soluciones cuando hay problemas en la operación.</div>
+        <div class="likert-options" id="L1"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Mi líder me trata con respeto.</div>
+        <div class="likert-options" id="L2"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Mi líder demuestra que le importa cómo me siento, no solo lo que produzco.</div>
+        <div class="likert-options" id="L3"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Mi líder da el ejemplo trabajando con la misma entrega que nos pide.</div>
+        <div class="likert-options" id="L4"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Mi líder me ayuda a mejorar en mi trabajo.</div>
+        <div class="likert-options" id="L5"></div>
+      </div>
+
+      <!-- L6 INVERSO -->
+      <div class="question-item inverso">
+        <div class="question-text">Mi líder toma decisiones sin decirle al equipo la razón.</div>
+        <div class="likert-options" id="L6"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Mi líder reconoce cuando hago bien mi trabajo.</div>
+        <div class="likert-options" id="L7"></div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 3: EQUIPO -->
+    <div class="section-card sc-b3">
+      <div class="section-title"><div class="icon">🤝</div>Mi Equipo</div>
+      <div class="section-sub">Piensa en las personas con quienes trabajas día a día.</div>
+
+      <div class="question-item">
+        <div class="question-text">Mi equipo se apoya mutuamente cuando hay presión en el servicio.</div>
+        <div class="likert-options" id="T1"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Mis compañeros son amables y respetuosos conmigo en el día a día.</div>
+        <div class="likert-options" id="T2"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Mis compañeros aceptan las opiniones de los demás sin tomárselo personal.</div>
+        <div class="likert-options" id="T3"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Mis compañeros hacen su trabajo con dedicación y no solo "por cumplir".</div>
+        <div class="likert-options" id="T4"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Siento que trabajamos como un verdadero equipo, no solo como individuos en el mismo turno.</div>
+        <div class="likert-options" id="T5"></div>
+      </div>
+
+      <!-- T6 INVERSO -->
+      <div class="question-item inverso">
+        <div class="question-text">Cuando alguien se equivoca, mis compañeros lo critican en lugar de ayudarlo.</div>
+        <div class="likert-options" id="T6"></div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 4: SOBRE MÍ MISMO -->
+    <div class="section-card sc-b4">
+      <div class="section-title"><div class="icon">🙋</div>Sobre mí mismo/a</div>
+      <div class="section-sub">Estas preguntas son sobre ti y cómo actúas en tu trabajo.</div>
+
+      <div class="question-item">
+        <div class="question-text">Cuando algo sale mal en mi turno, busco soluciones para corregirlo.</div>
+        <div class="likert-options" id="M1"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Cuando un compañero necesita ayuda en el turno, lo apoyo aunque no sea mi responsabilidad directa.</div>
+        <div class="likert-options" id="M2"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Me fijo en los detalles de mi trabajo aunque nadie esté mirando o revisando.</div>
+        <div class="likert-options" id="M3"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Cuando cometo un error, analizo qué pasó para no repetirlo.</div>
+        <div class="likert-options" id="M4"></div>
+      </div>
+
+      <!-- M5: Variable por nivel/local -->
+      <div class="question-item inverso" id="M5-wrap">
+        <div class="question-text" id="M5-text">Cargando...</div>
+        <div class="likert-options" id="M5"></div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 5: PERTENENCIA -->
+    <div class="section-card sc-b5">
+      <div class="section-title"><div class="icon">❤️</div>Mi Pertenencia en FOODIX</div>
+      <div class="section-sub">¿Cómo te sientes siendo parte de FOODIX?</div>
+
+      <div class="question-item">
+        <div class="question-text">Cuando alguien me pregunta dónde trabajo, lo digo con gusto.</div>
+        <div class="likert-options" id="P1"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Recomendaría FOODIX como un buen lugar para trabajar.</div>
+        <div class="likert-options" id="P2"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Sé con claridad cómo lo que hago cada día impacta en la experiencia del cliente.</div>
+        <div class="likert-options" id="P3"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Lo que FOODIX quiere lograr como empresa coincide con lo que me importa a mí.</div>
+        <div class="likert-options" id="P4"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">¿Conozco los valores de FOODIX?</div>
+        <div class="likert-options" id="P5"></div>
+      </div>
+
+      <div class="question-item inverso">
+        <div class="question-text">Cuando tengo un mal día en el trabajo, pienso en buscar otro empleo.</div>
+        <div class="likert-options" id="P6"></div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 6: FUTURO -->
+    <div class="section-card sc-b6">
+      <div class="section-title"><div class="icon">🚀</div>Mi Futuro en FOODIX</div>
+      <div class="section-sub">¿Cómo te imaginas en FOODIX hacia adelante?</div>
+
+      <div class="question-item inverso">
+        <div class="question-text">Si me ofrecieran un trabajo similar con el mismo sueldo en otra empresa, lo tomaría.</div>
+        <div class="likert-options" id="F1"></div>
+      </div>
+
+      <div class="question-item inverso">
+        <div class="question-text">En los últimos 3 meses he buscado trabajo en otro lugar.</div>
+        <div class="likert-options" id="F2"></div>
+      </div>
+
+      <div class="question-item inverso">
+        <div class="question-text">Me quedo en FOODIX porque necesito, no porque quiera.</div>
+        <div class="likert-options" id="F3"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Me veo trabajando en FOODIX dentro de 1 año.</div>
+        <div class="likert-options" id="F4"></div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 7: AMBIENTE -->
+    <div class="section-card sc-b7">
+      <div class="section-title"><div class="icon">⚙️</div>Mi Ambiente de Trabajo</div>
+      <div class="section-sub">¿Cómo son las condiciones en tu lugar de trabajo?</div>
+
+      <div class="question-item">
+        <div class="question-text">Recibo información clara sobre lo que tengo que hacer en mi trabajo.</div>
+        <div class="likert-options" id="A1"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Si tengo una idea para mejorar algo en mi área, me siento cómodo/a compartiéndola con mi líder.</div>
+        <div class="likert-options" id="A2"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Siento que lo que recibo de FOODIX — sueldo, beneficios y reconocimiento — vale el esfuerzo que pongo.</div>
+        <div class="likert-options" id="A3"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Puedo cumplir con mis tareas del turno sin sentir que el tiempo no me alcanza.</div>
+        <div class="likert-options" id="A4"></div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">Cuento con las herramientas y equipos necesarios para hacer bien mi trabajo.</div>
+        <div class="likert-options" id="A5"></div>
+      </div>
+
+      <div class="question-item inverso">
+        <div class="question-text">En mi turno hay situaciones que me impiden hacer bien mi trabajo.</div>
+        <div class="likert-options" id="A6"></div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 8: BENEFICIOS -->
+    <div class="section-card">
+      <div class="section-title"><div class="icon">🎁</div>Beneficios que más valoras</div>
+      <div class="section-sub">Ordena los beneficios del que más te importa (1°) al que menos (último). Arrastra cada elemento para reordenarlos.</div>
+
+      <div class="rank-intro">💡 Arrastra y suelta para ordenar — el primero de la lista es el que más valoras.</div>
+      <ul class="rank-list" id="rank-list"></ul>
+    </div>
+
+    <!-- BLOQUE 9: COMENTARIOS -->
+    <div class="section-card">
+      <div class="section-title"><div class="icon">💬</div>Comentarios adicionales</div>
+      <div class="section-sub">Estas preguntas son abiertas — escribe lo que quieras, con tus propias palabras.</div>
+
+      <div class="open-question">
+        <div class="question-num">C1</div>
+        <div class="question-text">¿Qué verdad sobre FOODIX, tu equipo o tus líderes crees que todos piensan pero nadie se atreve a decir?</div>
+        <textarea id="C1" placeholder="Escribe aquí tu respuesta..."></textarea>
+      </div>
+
+      <div class="open-question">
+        <div class="question-num">C2</div>
+        <div class="question-text">Si pudieras cambiar una sola cosa de FOODIX, ¿qué sería y por qué?</div>
+        <textarea id="C2" placeholder="Escribe aquí tu respuesta..."></textarea>
+      </div>
+
+      <div class="open-question">
+        <div class="question-num">C3</div>
+        <div class="question-text">¿Hay algo que quieras decirle a TTHH o a la Gerencia que normalmente no tienes oportunidad de expresar?</div>
+        <textarea id="C3" placeholder="Escribe aquí tu respuesta..."></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="submitSurvey()" style="margin-top:1rem;">✅ Enviar encuesta</button>
+      <button class="btn-back" onclick="resetForm()">↺ Empezar de nuevo</button>
+    </div>
+
+  </div><!-- /step-3 -->
+
+  <!-- ===== STEP 4: GRACIAS ===== -->
+  <div class="step" id="step-4">
+    <div class="success-card">
+      <div class="success-icon">⭐</div>
+      <h2>¡Muchas gracias por tu respuesta!</h2>
+      <p>Tu opinión es muy valiosa para nosotros. Con tu ayuda vamos a seguir construyendo el mejor equipo del sector gastronómico ecuatoriano.</p>
+      <br>
+      <p style="font-family:'Sora',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.6);">Resiliencia 🔥 · Hospitalidad 😊 · Corazón ❤️ · Siempre Mejorando 📈</p>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ============================================================
+// CONFIGURACIÓN
+// ============================================================
+const locationLevels = {
+  CH001: ['N1','N2'], CH002: ['N1','N2'], CH003: ['N1','N2'],
+  SB001: ['N1','N2'], SC001: ['N1','N2'], SC002: ['N1','N2'],
+  FX001: ['N1','N2','N3'], FX002: ['N1','N2','N3']
+};
+
+const levelNames = {
+  N1: 'Nivel 1 — Polifuncionales y Operativos',
+  N2: 'Nivel 2',
+  N3: 'Nivel 3 — Supervisores, Coordinadores y Jefaturas'
+};
+
+const tiendas = ['CH001','CH002','CH003','SB001','SC001','SC002'];
+const plantas = ['FX001','FX002'];
+
+function getNivel2Label(local) {
+  if (tiendas.includes(local)) return 'Nivel 2 — Gerentes de Tienda';
+  if (plantas.includes(local)) return 'Nivel 2 — Auxiliares, Asistentes y Analistas';
+  return 'Nivel 2';
+}
+
+// Pregunta variable M5 por nivel/sublevel/local
+function getM5(nivel, subnivel, local) {
+  if (nivel === 'N3') {
+    return {
+      text: 'En los momentos de más presión, me cuesta mantener la calma frente a mi equipo.',
+      inverso: true
+    };
+  }
+  if (nivel === 'N2') {
+    if (subnivel === 'gerente') {
+      return {
+        text: 'En los momentos de más presión, me enfoco en los resultados aunque deje de acompañar a mi equipo en el proceso.',
+        inverso: true
+      };
+    } else {
+      return {
+        text: 'Cuando identifico un problema en mi área antes de que me lo señalen, lo resuelvo o lo escalo sin esperar a que alguien más lo note.',
+        inverso: false
+      };
+    }
+  }
+  // N1
+  if (local === 'FX001') {
+    return {
+      text: 'En los momentos de más presión en línea, priorizo el volumen aunque baje la calidad del producto.',
+      inverso: true
+    };
+  }
+  return {
+    text: 'En los momentos de más presión, mi prioridad es despachar rápido.',
+    inverso: true
+  };
+}
+
+// Beneficios por nivel
+const beneficiosN1 = [
+  'Alimentación',
+  'Bonos de desempeño por cumplimiento de metas',
+  'Cursos / Capacitaciones pagadas',
+  'Día libre a elección (Por Cumplimiento)',
+  'Reconocimiento Público (Empleado del mes, grupos de WhatsApp)',
+  'Tarjeta de Bono de Compras (descuento en rol de pagos)',
+  'Transporte'
+];
+const beneficiosN2 = [
+  'Bonos de desempeño por KPIs',
+  'Cursos / Capacitaciones pagadas',
+  'Día libre a elección',
+  'Reconocimiento público (Empleado del mes)',
+  'Reconocimiento entre compañeros (reconocimiento entre pares)',
+  'Transporte',
+  'Flexibilidad horaria',
+  'Capacitación técnica externa'
+];
+const beneficiosN3 = [
+  'Bonos por cumplimiento de OKRs trimestrales',
+  'Plan de carrera documentado',
+  'Flexibilidad horaria',
+  'Capacitación técnica externa',
+  'Reconocimiento por innovación y propuestas implementadas',
+  'Día libre adicional',
+  'Trabajo híbrido donde aplique',
+  'Participación en decisiones estratégicas'
+];
+
+// ============================================================
+// ESCALAS
+// ============================================================
+const scaleAgree = [
+  { val: 1, label: 'Muy en desacuerdo' },
+  { val: 2, label: 'En desacuerdo' },
+  { val: 3, label: 'De acuerdo' },
+  { val: 4, label: 'Muy de acuerdo' }
+];
+const scaleFreq = [
+  { val: 1, label: 'Nunca' },
+  { val: 2, label: 'Casi nunca' },
+  { val: 3, label: 'Casi siempre' },
+  { val: 4, label: 'Siempre' }
+];
+
+function renderLikert(containerId, scale, isFreq) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  scale.forEach(opt => {
+    const div = document.createElement('div');
+    div.className = 'likert-option';
+    div.innerHTML = `
+      <input type="radio" name="${containerId}" id="${containerId}_${opt.val}" value="${opt.val}">
+      <label for="${containerId}_${opt.val}">
+        <span class="opt-num">${opt.val}</span>
+        <span class="opt-text">${opt.label}</span>
+      </label>`;
+    container.appendChild(div);
+  });
+}
+
+function renderAllLikerts() {
+  // Empresa
+  renderLikert('E1', scaleFreq, true);
+  renderLikert('E2', scaleAgree, false);
+  renderLikert('E3', scaleAgree, false);
+  renderLikert('E4', scaleAgree, false);
+  renderLikert('E5', scaleAgree, false);
+  renderLikert('E6', scaleAgree, false);
+  // Líder
+  renderLikert('L1', scaleFreq, true);
+  renderLikert('L2', scaleAgree, false);
+  renderLikert('L3', scaleFreq, true);
+  renderLikert('L4', scaleFreq, true);
+  renderLikert('L5', scaleFreq, true);
+  renderLikert('L6', scaleAgree, false);
+  renderLikert('L7', scaleFreq, true);
+  // Equipo
+  renderLikert('T1', scaleFreq, true);
+  renderLikert('T2', scaleAgree, false);
+  renderLikert('T3', scaleFreq, true);
+  renderLikert('T4', scaleFreq, true);
+  renderLikert('T5', scaleAgree, false);
+  renderLikert('T6', scaleFreq, true);
+  // Sobre mí
+  renderLikert('M1', scaleFreq, true);
+  renderLikert('M2', scaleFreq, true);
+  renderLikert('M3', scaleFreq, true);
+  renderLikert('M4', scaleFreq, true);
+  // Pertenencia
+  renderLikert('P1', scaleFreq, true);
+  renderLikert('P2', scaleAgree, false);
+  renderLikert('P3', scaleAgree, false);
+  renderLikert('P4', scaleAgree, false);
+  renderLikert('P5', scaleAgree, false);
+  renderLikert('P6', scaleFreq, true);
+  // Futuro
+  renderLikert('F1', scaleAgree, false);
+  renderLikert('F2', scaleFreq, true);
+  renderLikert('F3', scaleAgree, false);
+  renderLikert('F4', scaleAgree, false);
+  // Ambiente
+  renderLikert('A1', scaleFreq, true);
+  renderLikert('A2', scaleAgree, false);
+  renderLikert('A3', scaleAgree, false);
+  renderLikert('A4', scaleFreq, true);
+  renderLikert('A5', scaleAgree, false);
+  renderLikert('A6', scaleFreq, true);
+}
+
+// ============================================================
+// DRAG TO RANK
+// ============================================================
+let dragSrc = null;
+
+function buildRankList(items) {
+  const list = document.getElementById('rank-list');
+  list.innerHTML = '';
+  items.forEach((item, i) => {
+    const li = document.createElement('li');
+    li.className = 'rank-item';
+    li.draggable = true;
+    li.dataset.value = item;
+    li.innerHTML = `
+      <div class="rank-pos">${i+1}</div>
+      <div class="rank-text">${item}</div>
+      <div class="rank-handle">⠿</div>`;
+    li.addEventListener('dragstart', e => {
+      dragSrc = li;
+      li.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    li.addEventListener('dragend', () => {
+      li.classList.remove('dragging');
+      document.querySelectorAll('.rank-item').forEach(el => el.classList.remove('drag-over'));
+      updateRankPositions();
+    });
+    li.addEventListener('dragover', e => {
+      e.preventDefault();
+      if (li !== dragSrc) li.classList.add('drag-over');
+    });
+    li.addEventListener('dragleave', () => li.classList.remove('drag-over'));
+    li.addEventListener('drop', e => {
+      e.preventDefault();
+      if (dragSrc !== li) {
+        const items = [...list.querySelectorAll('.rank-item')];
+        const srcIdx = items.indexOf(dragSrc);
+        const dstIdx = items.indexOf(li);
+        if (srcIdx < dstIdx) list.insertBefore(dragSrc, li.nextSibling);
+        else list.insertBefore(dragSrc, li);
+      }
+    });
+    // Touch support
+    li.addEventListener('touchstart', touchStart, {passive:true});
+    li.addEventListener('touchmove', touchMove, {passive:false});
+    li.addEventListener('touchend', touchEnd);
+    list.appendChild(li);
+  });
+}
+
+function updateRankPositions() {
+  document.querySelectorAll('.rank-item').forEach((el, i) => {
+    el.querySelector('.rank-pos').textContent = i + 1;
+  });
+}
+
+// Touch drag
+let touchItem = null, touchClone = null, touchOffsetY = 0;
+function touchStart(e) {
+  touchItem = e.currentTarget;
+  touchItem.classList.add('dragging');
+  const rect = touchItem.getBoundingClientRect();
+  touchOffsetY = e.touches[0].clientY - rect.top;
+  touchClone = touchItem.cloneNode(true);
+  touchClone.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;opacity:0.8;z-index:9999;pointer-events:none;`;
+  document.body.appendChild(touchClone);
+}
+function touchMove(e) {
+  e.preventDefault();
+  if (!touchClone) return;
+  const y = e.touches[0].clientY - touchOffsetY;
+  touchClone.style.top = y + 'px';
+  const el = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+  const target = el ? el.closest('.rank-item') : null;
+  document.querySelectorAll('.rank-item').forEach(i => i.classList.remove('drag-over'));
+  if (target && target !== touchItem) target.classList.add('drag-over');
+}
+function touchEnd(e) {
+  if (touchClone) { document.body.removeChild(touchClone); touchClone = null; }
+  if (!touchItem) return;
+  touchItem.classList.remove('dragging');
+  const target = document.querySelector('.rank-item.drag-over');
+  if (target && target !== touchItem) {
+    const list = document.getElementById('rank-list');
+    const items = [...list.querySelectorAll('.rank-item')];
+    const si = items.indexOf(touchItem), di = items.indexOf(target);
+    if (si < di) list.insertBefore(touchItem, target.nextSibling);
+    else list.insertBefore(touchItem, target);
+  }
+  document.querySelectorAll('.rank-item').forEach(i => i.classList.remove('drag-over'));
+  updateRankPositions();
+  touchItem = null;
+}
+
+// ============================================================
+// LOCALSTORAGE — GUARDADO AUTOMÁTICO DE PROGRESO
+// ============================================================
+const STORAGE_KEY = 'foodix_stars_2026';
+const ALL_QUESTIONS = [
+  'E1','E2','E3','E4','E5','E6',
+  'L1','L2','L3','L4','L5','L6','L7',
+  'T1','T2','T3','T4','T5','T6',
+  'M1','M2','M3','M4','M5',
+  'P1','P2','P3','P4','P5','P6',
+  'F1','F2','F3','F4',
+  'A1','A2','A3','A4','A5','A6'
+];
+
+function saveProgress() {
+  const data = {
+    step: currentStep,
+    local: document.getElementById('select-local').value,
+    nivel: document.getElementById('select-nivel').value,
+    subnivel: document.getElementById('select-subnivel').value,
+    answers: {},
+    beneficios: [],
+    C1: document.getElementById('C1') ? document.getElementById('C1').value : '',
+    C2: document.getElementById('C2') ? document.getElementById('C2').value : '',
+    C3: document.getElementById('C3') ? document.getElementById('C3').value : '',
+    ts: Date.now()
+  };
+  ALL_QUESTIONS.forEach(q => {
+    const sel = document.querySelector(`input[name="${q}"]:checked`);
+    if (sel) data.answers[q] = sel.value;
+  });
+  const rankItems = [...document.querySelectorAll('.rank-item')];
+  if (rankItems.length) data.beneficios = rankItems.map(el => el.dataset.value);
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch(e) { return null; }
+}
+
+function clearProgress() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+}
+
+function restoreAnswers(saved) {
+  // Restore Likert radios
+  ALL_QUESTIONS.forEach(q => {
+    if (saved.answers[q]) {
+      const radio = document.querySelector(`input[name="${q}"][value="${saved.answers[q]}"]`);
+      if (radio) radio.checked = true;
+    }
+  });
+  // Restore open text
+  if (saved.C1 && document.getElementById('C1')) document.getElementById('C1').value = saved.C1;
+  if (saved.C2 && document.getElementById('C2')) document.getElementById('C2').value = saved.C2;
+  if (saved.C3 && document.getElementById('C3')) document.getElementById('C3').value = saved.C3;
+  // Restore rank order
+  if (saved.beneficios && saved.beneficios.length) {
+    const list = document.getElementById('rank-list');
+    if (list) {
+      saved.beneficios.forEach(val => {
+        const item = [...list.querySelectorAll('.rank-item')].find(el => el.dataset.value === val);
+        if (item) list.appendChild(item);
+      });
+      updateRankPositions();
+    }
+  }
+}
+
+// Auto-save banner
+function showSaveBanner() {
+  let banner = document.getElementById('save-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'save-banner';
+    banner.style.cssText = `
+      position:fixed;bottom:16px;right:16px;
+      background:#166534;color:white;
+      font-size:0.72rem;font-weight:600;
+      padding:7px 14px;border-radius:20px;
+      z-index:9999;opacity:0;
+      transition:opacity 0.3s;
+      font-family:'Inter',sans-serif;
+      box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    `;
+    banner.textContent = '✓ Progreso guardado';
+    document.body.appendChild(banner);
+  }
+  banner.style.opacity = '1';
+  clearTimeout(banner._timer);
+  banner._timer = setTimeout(() => { banner.style.opacity = '0'; }, 1800);
+}
+
+// Attach auto-save to all radio changes and textareas
+function attachAutoSave() {
+  document.addEventListener('change', e => {
+    if (e.target.type === 'radio' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
+      saveProgress();
+      if (e.target.type === 'radio') showSaveBanner();
+    }
+  });
+  document.addEventListener('input', e => {
+    if (e.target.tagName === 'TEXTAREA') saveProgress();
+  });
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+let currentStep = 1;
+const totalSteps = 4;
+
+function updateProgress(step) {
+  const labels = ['Inicio', 'Tu nivel', 'Encuesta', 'Completado'];
+  const pcts = [5, 15, 90, 100];
+  document.getElementById('progress-label').textContent = labels[step-1] || '';
+  const pct = pcts[step-1] || 0;
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+function goToStep(n) {
+  document.getElementById('step-' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('step-' + n).classList.add('active');
+  updateProgress(n);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  if (n === 3) setupStep3();
+  saveProgress();
+}
+
+function onNivelChange() {
+  const nivel = document.getElementById('select-nivel').value;
+  const local = document.getElementById('select-local').value;
+  const btn = document.getElementById('btn-step2');
+  const subnivel = document.getElementById('subnivel-wrap');
+
+  if (nivel === 'N2') {
+    // Tiendas → solo Gerente de Tienda (auto, sin selección)
+    const esTienda = ['CH001','CH002','CH003','SB001','SC001','SC002'].includes(local);
+    // FX → solo admin (auto, sin selección)
+    const esFX = ['FX001','FX002'].includes(local);
+
+    if (esTienda) {
+      // Asignar automáticamente gerente, ocultar selector
+      document.getElementById('select-subnivel').value = 'gerente';
+      subnivel.style.display = 'none';
+      btn.disabled = false;
+    } else if (esFX) {
+      // Asignar automáticamente admin, ocultar selector
+      document.getElementById('select-subnivel').value = 'admin';
+      subnivel.style.display = 'none';
+      btn.disabled = false;
+    } else {
+      subnivel.style.display = 'none';
+      btn.disabled = false;
+    }
+  } else {
+    subnivel.style.display = 'none';
+    btn.disabled = !nivel;
+  }
+  saveProgress();
+}
+
+function onSubnivelChange() {
+  const val = document.getElementById('select-subnivel').value;
+  document.getElementById('btn-step2').disabled = !val;
+  saveProgress();
+}
+
+function onLocalChange() {
+  const val = document.getElementById('select-local').value;
+  document.getElementById('btn-step1').disabled = !val;
+  const nivelSelect = document.getElementById('select-nivel');
+  nivelSelect.innerHTML = '<option value="">— Selecciona tu nivel —</option>';
+  if (val && locationLevels[val]) {
+    locationLevels[val].forEach(n => {
+      const opt = document.createElement('option');
+      opt.value = n;
+      if (n === 'N2') {
+        opt.textContent = getNivel2Label(val);
+      } else {
+        opt.textContent = levelNames[n];
+      }
+      nivelSelect.appendChild(opt);
+    });
+  }
+  document.getElementById('btn-step2').disabled = true;
+  document.getElementById('subnivel-wrap').style.display = 'none';
+  saveProgress();
+}
+
+function setupStep3() {
+  const local = document.getElementById('select-local').value;
+  const nivel = document.getElementById('select-nivel').value;
+  const subnivel = document.getElementById('select-subnivel').value;
+
+  renderAllLikerts();
+
+  const m5data = getM5(nivel, subnivel, local);
+  document.getElementById('M5-text').textContent = m5data.text;
+  const m5wrap = document.getElementById('M5-wrap');
+  if (m5data.inverso) {
+    m5wrap.classList.add('inverso');
+  } else {
+    m5wrap.classList.remove('inverso');
+  }
+  renderLikert('M5', scaleFreq, true);
+
+  let bens;
+  if (nivel === 'N3') bens = beneficiosN3;
+  else if (nivel === 'N2') bens = beneficiosN2;
+  else bens = beneficiosN1;
+  buildRankList(bens);
+
+  // Restore saved answers after rendering
+  const saved = loadProgress();
+  if (saved) restoreAnswers(saved);
+}
+
+async function submitSurvey() {
+  const btn = document.querySelector('[onclick="submitSurvey()"]');
+  btn.disabled = true;
+  btn.textContent = '⏳ Enviando...';
+
+  const local    = document.getElementById('select-local').value;
+  const nivel    = document.getElementById('select-nivel').value;
+  const subnivel = document.getElementById('select-subnivel').value;
+
+  const payload = { local, nivel, subnivel: subnivel || null };
+
+  ALL_QUESTIONS.forEach(q => {
+    const sel = document.querySelector(`input[name="${q}"]:checked`);
+    payload[q.toLowerCase()] = sel ? parseInt(sel.value) : null;
+  });
+
+  payload.beneficios_orden = [...document.querySelectorAll('.rank-item')]
+    .map(el => el.dataset.value);
+
+  payload.c1 = document.getElementById('C1').value || null;
+  payload.c2 = document.getElementById('C2').value || null;
+  payload.c3 = document.getElementById('C3').value || null;
+
+  const SUPABASE_URL = 'https://oufzmiklqcwbabaxhyjy.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im91ZnptaWtscWN3YmFiYXhoeWp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0ODc2ODUsImV4cCI6MjA4ODA2MzY4NX0.4e_H9TBr9EeG6PP_W5vvfPR7Ack4AfpNKZiWH0xdKJI';
+
+  try {
+    const res = await fetch(
+      SUPABASE_URL + '/rest/v1/gth_encuesta_foodix_2026_03',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      }
+    );
+
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`HTTP ${res.status}: ${errText}`);
+    }
+
+    clearProgress();
+    goToStep(4);
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = '✅ Enviar encuesta';
+    alert('Hubo un error al enviar. Verifica tu conexión e intenta de nuevo.\n\n' + err.message);
+    console.error('Error enviando encuesta:', err);
+  }
+}
+
+// ============================================================
+// INIT — Restaurar progreso si existe
+// ============================================================
+attachAutoSave();
+updateProgress(1);
+
+// Verificar si hay progreso guardado al cargar la página
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = loadProgress();
+  if (!saved || saved.step === 4) return; // No restaurar si ya completó
+
+  // Mostrar banner de recuperación
+  const banner = document.createElement('div');
+  banner.style.cssText = `
+    position:fixed;bottom:0;left:0;right:0;
+    background:#1E2761;color:white;
+    padding:14px 20px;z-index:9999;
+    font-family:'Inter',sans-serif;font-size:0.88rem;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;box-shadow:0 -4px 16px rgba(0,0,0,0.2);
+  `;
+
+  // Calcular cuántas preguntas respondidas
+  const answered = Object.keys(saved.answers || {}).length;
+  const totalQ = ALL_QUESTIONS.length;
+  const pct = Math.round((answered / totalQ) * 100);
+
+  banner.innerHTML = `
+    <div>
+      <div style="font-weight:700;margin-bottom:3px;">⏸ Tienes una encuesta en progreso</div>
+      <div style="font-size:0.78rem;opacity:0.8;">${answered} de ${totalQ} preguntas respondidas (${pct}%)</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-shrink:0;">
+      <button onclick="resumeSurvey()" style="background:#C41230;color:white;border:none;padding:8px 16px;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:'Inter',sans-serif;">
+        Continuar →
+      </button>
+      <button onclick="discardAndRestart()" style="background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3);padding:8px 12px;border-radius:8px;font-size:0.78rem;cursor:pointer;font-family:'Inter',sans-serif;">
+        Empezar de nuevo
+      </button>    </div>
+  `;
+  document.body.appendChild(banner);
+  window._recoveryBanner = banner;
+});
+
+function resumeSurvey() {
+  const saved = loadProgress();
+  if (!saved) return;
+  if (window._recoveryBanner) document.body.removeChild(window._recoveryBanner);
+
+  // Restaurar local
+  const localSel = document.getElementById('select-local');
+  localSel.value = saved.local || '';
+  if (saved.local) onLocalChange();
+
+  // Restaurar nivel
+  const nivelSel = document.getElementById('select-nivel');
+  nivelSel.value = saved.nivel || '';
+  if (saved.nivel) onNivelChange();
+
+  // Restaurar subnivel
+  if (saved.subnivel) {
+    const subSel = document.getElementById('select-subnivel');
+    subSel.value = saved.subnivel;
+    onSubnivelChange();
+  }
+
+  // Ir al paso guardado
+  const targetStep = saved.step || 1;
+  document.getElementById('step-' + currentStep).classList.remove('active');
+  currentStep = targetStep;
+  document.getElementById('step-' + currentStep).classList.add('active');
+  updateProgress(currentStep);
+  if (currentStep === 3) setupStep3();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function resetForm() {
+  if (!confirm('¿Seguro que quieres empezar de nuevo? Se borrarán todas las respuestas.')) return;
+
+  // Limpiar localStorage
+  clearProgress();
+
+  // Resetear selects de pasos 1 y 2
+  document.getElementById('select-local').value = '';
+  document.getElementById('select-nivel').innerHTML = '<option value="">— Selecciona tu nivel —</option>';
+  document.getElementById('select-subnivel').value = '';
+  document.getElementById('subnivel-wrap').style.display = 'none';
+  document.getElementById('btn-step1').disabled = true;
+  document.getElementById('btn-step2').disabled = true;
+
+  // Limpiar todos los radios
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+
+  // Limpiar textos abiertos
+  ['C1','C2','C3'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+
+  // Volver al paso 1
+  document.getElementById('step-' + currentStep).classList.remove('active');
+  currentStep = 1;
+  document.getElementById('step-1').classList.add('active');
+  updateProgress(1);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function discardAndRestart() {
+  clearProgress();
+  if (window._recoveryBanner) document.body.removeChild(window._recoveryBanner);
+}
+</script>
+</body>
+</html>
