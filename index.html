@@ -420,14 +420,18 @@
   }
   .rank-item:active { cursor: grabbing; }
   .rank-item.dragging {
-    opacity: 0.5;
-    border-color: var(--fd-dark);
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(18,52,80,0.12);
+    /* estilos cuando flota — sobrescritos por inline style */
+    opacity: 0.96;
+    cursor: grabbing;
   }
-  .rank-item.drag-over {
-    border-color: var(--fd-pink);
-    background: rgba(244,63,94,0.03);
+  .rank-placeholder {
+    margin-bottom: 6px;
+    border-radius: 10px;
+    background: rgba(244,63,94,0.05);
+    border: 1.5px dashed rgba(244,63,94,0.35);
+    list-style: none;
+    box-sizing: border-box;
+    pointer-events: none;
   }
   .campo-requerido {
     border: 2px solid var(--fd-pink) !important;
@@ -1156,9 +1160,8 @@ function renderAllLikerts() {
 }
 
 // ============================================================
-// DRAG TO RANK
+// DRAG TO RANK — Pointer Events API (mouse + touch unificado)
 // ============================================================
-let dragSrc = null;
 
 function buildRankList(items) {
   const list = document.getElementById('rank-list');
@@ -1166,87 +1169,93 @@ function buildRankList(items) {
   items.forEach((item, i) => {
     const li = document.createElement('li');
     li.className = 'rank-item';
-    li.draggable = true;
     li.dataset.value = item;
     li.innerHTML = `
       <div class="rank-pos">${i+1}</div>
       <div class="rank-text">${item}</div>
       <div class="rank-handle">⠿</div>`;
-    li.addEventListener('dragstart', e => {
-      dragSrc = li;
-      li.classList.add('dragging');
-      e.dataTransfer.effectAllowed = 'move';
-    });
-    li.addEventListener('dragend', () => {
-      li.classList.remove('dragging');
-      document.querySelectorAll('.rank-item').forEach(el => el.classList.remove('drag-over'));
-      updateRankPositions();
-    });
-    li.addEventListener('dragover', e => {
-      e.preventDefault();
-      if (li !== dragSrc) li.classList.add('drag-over');
-    });
-    li.addEventListener('dragleave', () => li.classList.remove('drag-over'));
-    li.addEventListener('drop', e => {
-      e.preventDefault();
-      if (dragSrc !== li) {
-        const items = [...list.querySelectorAll('.rank-item')];
-        const srcIdx = items.indexOf(dragSrc);
-        const dstIdx = items.indexOf(li);
-        if (srcIdx < dstIdx) list.insertBefore(dragSrc, li.nextSibling);
-        else list.insertBefore(dragSrc, li);
-      }
-    });
-    // Touch support
-    li.addEventListener('touchstart', touchStart, {passive:true});
-    li.addEventListener('touchmove', touchMove, {passive:false});
-    li.addEventListener('touchend', touchEnd);
     list.appendChild(li);
   });
+  initDragSort(list);
 }
 
 function updateRankPositions() {
-  document.querySelectorAll('.rank-item').forEach((el, i) => {
+  document.querySelectorAll('#rank-list .rank-item').forEach((el, i) => {
     el.querySelector('.rank-pos').textContent = i + 1;
   });
 }
 
-// Touch drag
-let touchItem = null, touchClone = null, touchOffsetY = 0;
-function touchStart(e) {
-  touchItem = e.currentTarget;
-  touchItem.classList.add('dragging');
-  const rect = touchItem.getBoundingClientRect();
-  touchOffsetY = e.touches[0].clientY - rect.top;
-  touchClone = touchItem.cloneNode(true);
-  touchClone.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;opacity:0.8;z-index:9999;pointer-events:none;`;
-  document.body.appendChild(touchClone);
-}
-function touchMove(e) {
-  e.preventDefault();
-  if (!touchClone) return;
-  const y = e.touches[0].clientY - touchOffsetY;
-  touchClone.style.top = y + 'px';
-  const el = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
-  const target = el ? el.closest('.rank-item') : null;
-  document.querySelectorAll('.rank-item').forEach(i => i.classList.remove('drag-over'));
-  if (target && target !== touchItem) target.classList.add('drag-over');
-}
-function touchEnd(e) {
-  if (touchClone) { document.body.removeChild(touchClone); touchClone = null; }
-  if (!touchItem) return;
-  touchItem.classList.remove('dragging');
-  const target = document.querySelector('.rank-item.drag-over');
-  if (target && target !== touchItem) {
-    const list = document.getElementById('rank-list');
-    const items = [...list.querySelectorAll('.rank-item')];
-    const si = items.indexOf(touchItem), di = items.indexOf(target);
-    if (si < di) list.insertBefore(touchItem, target.nextSibling);
-    else list.insertBefore(touchItem, target);
-  }
-  document.querySelectorAll('.rank-item').forEach(i => i.classList.remove('drag-over'));
-  updateRankPositions();
-  touchItem = null;
+function initDragSort(list) {
+  let ds = null; // drag state
+
+  list.addEventListener('pointerdown', e => {
+    const item = e.target.closest('.rank-item');
+    if (!item) return;
+    e.preventDefault();
+
+    // setPointerCapture en el list para no perder eventos si el puntero sale
+    list.setPointerCapture(e.pointerId);
+
+    const rect = item.getBoundingClientRect();
+
+    // Placeholder que mantiene el espacio en el flujo normal
+    const ph = document.createElement('li');
+    ph.className = 'rank-placeholder';
+    ph.style.height = rect.height + 'px';
+    list.insertBefore(ph, item);
+
+    // El item flota sobre la página
+    item.classList.add('dragging');
+    item.style.cssText = `
+      position:fixed;z-index:9999;
+      width:${rect.width}px;left:${rect.left}px;top:${rect.top}px;
+      margin:0;box-sizing:border-box;
+      box-shadow:0 12px 36px rgba(18,52,80,0.25);
+      transform:scale(1.025);
+      transition:box-shadow 0.1s,transform 0.1s;
+      pointer-events:none;
+    `;
+
+    ds = { item, ph, startY: e.clientY, initTop: rect.top };
+  });
+
+  list.addEventListener('pointermove', e => {
+    if (!ds) return;
+    e.preventDefault();
+    const { item, ph, startY, initTop } = ds;
+
+    // Mover el item flotante
+    item.style.top = (initTop + e.clientY - startY) + 'px';
+
+    // Calcular dónde insertar el placeholder
+    const mid = e.clientY;
+    const siblings = [...list.querySelectorAll('.rank-item:not(.dragging)')];
+    let before = null;
+    for (const sib of siblings) {
+      const r = sib.getBoundingClientRect();
+      if (mid < r.top + r.height * 0.5) { before = sib; break; }
+    }
+    if (before) list.insertBefore(ph, before);
+    else list.appendChild(ph);
+  });
+
+  const endDrag = () => {
+    if (!ds) return;
+    const { item, ph } = ds;
+    ds = null;
+
+    // Colocar el item donde está el placeholder
+    item.style.cssText = '';
+    item.classList.remove('dragging');
+    list.insertBefore(item, ph);
+    ph.remove();
+
+    updateRankPositions();
+    saveProgress();
+  };
+
+  list.addEventListener('pointerup', endDrag);
+  list.addEventListener('pointercancel', endDrag);
 }
 
 // ============================================================
